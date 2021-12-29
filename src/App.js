@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, useEffect } from "react";
+import lottery from "./lottery";
 
 function App() {
+  const [manager, setManager] = useState("Loading...");
+  useEffect(() => {
+    async function getManager() {
+      const fetchedManager = await lottery.methods.manager().call();
+      setManager(fetchedManager);
+    }
+    getManager();
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Lotter Smart Contract. Use with Metamask extension</h2>
+      <p>This contract is managed by: {manager}</p>
     </div>
   );
 }
